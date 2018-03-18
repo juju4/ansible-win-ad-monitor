@@ -40,7 +40,7 @@
     dest: "{{ win_temp_dir }}\\DCSYNCMONITORSERVICE.exe"
 
 - name: DCSyncMonitor | Copy tool to Windows system32
-  file:
+  win_copy:
     src: "{{ win_temp_dir }}\\DCSYNCMONITORSERVICE.exe"
     dest: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe"
 
