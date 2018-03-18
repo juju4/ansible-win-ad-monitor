@@ -43,6 +43,7 @@
   win_copy:
     src: "{{ win_temp_dir }}\\DCSYNCMONITORSERVICE.exe"
     dest: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe"
+    remote_src: yes
 
 - name: DCSyncMonitor | upload whitelist files
   win_template:
