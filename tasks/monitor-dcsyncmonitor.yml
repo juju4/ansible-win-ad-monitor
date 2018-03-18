@@ -8,20 +8,22 @@
     dest: "{{ win_temp_dir }}\\npcap-0.99-r1.exe"
 
 - name: DCSyncMonitor | Install npcap
-  win_command: "{{ win_temp_dir }}\\npcap-0.99-r1.exe /npf_startup=yes /loopback_support=yes /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
+  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /s /npf_startup=yes /loopback_support=yes /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
+  args:
+    creates: "C:\\Program Files\\Npcap\\NPFInstall.exe"
 
 - name: DCSyncMonitor | Copy npcap dll to Windows system32
   file:
     src: "{{ item }}"
     dest: "C:\\Windows\\System32\\{{ item | win_basename }}"
-  with_files:
+  with_fileglob:
     - "C:\\Windows\\System32\\Npcap\\*.dll"
 
 - name: DCSyncMonitor | Copy npcap dll to Windows SYSWOW64
   file:
     src: "{{ item }}"
     dest: "C:\\Windows\\SYSWOW64\\{{ item | win_basename }}"
-  with_files:
+  with_fileglob:
     - "C:\\Windows\\SYSWOW64\\Npcap\\*.dll"
 
 - name: DCSyncMonitor | Install tool
