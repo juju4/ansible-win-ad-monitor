@@ -2,8 +2,8 @@
 
 - name: Ensure user _monitorsec is present
   win_user:
-    name: _monitorsec
-    password: "{{ ansible_become_password }}"
+    name: "{{ win_admonitor_monitorsec_user }}"
+    password: "{{ win_admonitor_monitorsec_password }}"
     state: present
     groups:
       - Users
@@ -13,7 +13,7 @@
 # Computer Configuration\Windows Settings\Security Settings\Local Policies\User Rights Assignment
 # if know SID beforehand, can be through secedit. else needs win2k3 support kit
 - name: Download win2k3 support kit for ntrights
-  get_url:
+  win_get_url:
     url: https://download.microsoft.com/download/8/e/c/8ec3a7d8-05b4-440a-a71e-ca3ee25fe057/rktools.exe
     dest: "{{ win_temp_dir }}\\rktools.exe"
 #  win_command: ntrights.exe -u _monitorsec +r SeBatchLogonRight
@@ -51,8 +51,8 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\_monitorsec"
-    password: "{{ ansible_become_password }}"
+    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
 - name: Monitor daily run | PingCastle
@@ -65,8 +65,8 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\_monitorsec"
-    password: "{{ ansible_become_password }}"
+    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
 - name: Monitor daily run | BloodHound-Sharphound
@@ -78,8 +78,8 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\_monitorsec"
-    password: "{{ ansible_become_password }}"
+    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
 # https://github.com/l0ss/Grouper
@@ -93,6 +93,6 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\_monitorsec"
-    password: "{{ ansible_become_password }}"
+    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest

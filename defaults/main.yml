@@ -3,4 +3,7 @@
 win_temp_dir: 'c:\Program Files\ansible'
 win_log_dir: 'c:\ProgramData\ansible\log'
 
+win_domain: 'WORKGROUP'
+win_admonitor_monitorsec_user: '_monitorsec'
+win_admonitor_monitorsec_password: '_Password_CI_CD_to_be_revoked1_'
 #win_admonitor_dcsync_whitelist: dc_ip_list.conf
