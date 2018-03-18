@@ -1,0 +1,12 @@
+---
+
+- name: Ensure ansible directories exist
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ win_temp_dir }}"
+    - "{{ win_log_dir }}"
+
+- include: monitor-ad.yml
+- include: monitor-dcsyncmonitor.yml

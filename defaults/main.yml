@@ -1,0 +1,6 @@
+---
+
+win_temp_dir: 'c:\Program Files\ansible'
+win_log_dir: 'c:\ProgramData\ansible\log'
+
+#win_admonitor_dcsync_whitelist: dc_ip_list.conf
