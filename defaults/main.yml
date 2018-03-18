@@ -6,11 +6,13 @@ win_log_dir: 'c:\ProgramData\ansible\log'
 win_domain: 'WORKGROUP'
 win_admonitor_monitorsec_user: '_monitorsec'
 win_admonitor_monitorsec_password: '_Password_CI_CD_to_be_revoked1_'
+win_schedtask_user: "{{ win_admonitor_monitorsec_user }}"
+#win_schedtask_user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
 #win_admonitor_dcsync_whitelist: dc_ip_list.conf
 
 win_monitorsec_tools:
-  - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/1.4/BloodHound-win32-x64.zip', c: '' }
-  - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.2.0.zip', c: '' }
-  - { u: 'https://github.com/l0ss/Grouper/archive/master.zip', c: '' }
-  - { u: 'https://github.com/cyberark/ACLight/archive/master.zip' }
+  - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/1.4/BloodHound-win32-x64.zip', c: '', d: 'BloodHound', creates: 'resources/app/Ingestors/SharpHound.exe' }
+#  - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.3.0.zip', c: '', d: 'PingCastle' }
+  - { u: 'https://github.com/l0ss/Grouper/archive/master.zip', f: 'Grouper.zip', c: '', d: 'Grouper' }
+  - { u: 'https://github.com/cyberark/ACLight/archive/master.zip', f: 'ACLight.zip', c: '', d: 'ACLight', creates: 'ACLight.ps1' }
 #  - { u: '' }

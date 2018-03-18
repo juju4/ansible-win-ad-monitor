@@ -12,33 +12,39 @@
 # FIXME! user must have 'Log on as a batch job' right
 # Computer Configuration\Windows Settings\Security Settings\Local Policies\User Rights Assignment
 # if know SID beforehand, can be through secedit. else needs win2k3 support kit
-- name: Download win2k3 support kit for ntrights
-  win_get_url:
-    url: https://download.microsoft.com/download/8/e/c/8ec3a7d8-05b4-440a-a71e-ca3ee25fe057/rktools.exe
-    dest: "{{ win_temp_dir }}\\rktools.exe"
-#  win_command: ntrights.exe -u _monitorsec +r SeBatchLogonRight
+- name: Ensure requirements are present
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - inspec
+    - rktools.2003
+
+# FIXME! not idempotent
+- name: Ensure monitor account as BatchLogonRight
+  win_command: "\"C:\\Program Files (x86)\\Windows Resource Kits\\Tools\\ntrights.exe\" -u {{ win_admonitor_monitorsec_user }} +r SeBatchLogonRight"
+  register: ntrights
+  when_changed: '... successful' in ntrights.stdout
+  when_failed: '***Error***' in ntrights.stdout
 
 # No checksums options
 - name: Monitor | download tools
   win_get_url:
     url: "{{ item.u }}"
-    dest: "{{ win_temp_dir }}\\{{ item.u | basename }}"
+    dest: "{{ win_temp_dir }}\\{{ item.f | default(item.u | basename) }}"
   with_items: "{{ win_monitorsec_tools }}"
 
 - name: Monitor | unarchive tools
   win_unzip:
-    src: "{{ win_temp_dir }}\\{{ item.u | basename }}"
-    dest: "{{ win_temp_dir }}\\{{ item.u | basename | regexp_replace('.zip$', '') }}"
-#    creates: "{{ win_temp_dir }}\\{{ item.u | basename | regexp_replace('.zip$', '') }}\\{{ item.c }}"
+    src: "{{ win_temp_dir }}\\{{ item.f | default(item.u | basename) }}"
+    dest: "{{ win_temp_dir }}\\{{ item.d }}"
+    creates: "{{ win_temp_dir }}\\{{ item.d }}\\{{ item.creates }}"
   with_items: "{{ win_monitorsec_tools }}"
-
-- name: Monitor | Ensure inspec is present
-  win_chocolatey:
-    name: inspec
-    state: present
 
 - name: Monitor daily run | Inspec windows-baseline
   win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec.log"
+  args:
+    creates: "{{ win_log_dir }}\\inspec.log"
   ignore_errors: true
 
 - name: Monitor daily run | Inspec
@@ -51,7 +57,7 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    user: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
@@ -65,7 +71,7 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    user: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
@@ -78,7 +84,7 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    user: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
 
@@ -93,6 +99,6 @@
     frequency: daily
     state: present
     enabled: yes
-    user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+    user: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
 #    runlevel: highest
