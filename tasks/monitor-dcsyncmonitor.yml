@@ -8,9 +8,15 @@
     dest: "{{ win_temp_dir }}\\npcap-0.99-r1.exe"
 
 - name: DCSyncMonitor | Install npcap
-  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /s /npf_startup=yes /loopback_support=yes /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
+  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /S /npf_startup=yes /loopback_support=yes /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
   args:
     creates: "C:\\Program Files\\Npcap\\NPFInstall.exe"
+  when: win_admonitor_npcapoem
+
+- name: Please install manually npcap - https://nmap.org/npcap/oem/
+  pause:
+    prompt: "Please install manually npcap, free version does not support silent mode - https://nmap.org/npcap/oem/"
+  when: not win_admonitor_npcapoem and not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Copy npcap dll to Windows system32
   file:
@@ -18,6 +24,7 @@
     dest: "C:\\Windows\\System32\\{{ item | win_basename }}"
   with_fileglob:
     - "C:\\Windows\\System32\\Npcap\\*.dll"
+  when: not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Copy npcap dll to Windows SYSWOW64
   file:
@@ -25,6 +32,7 @@
     dest: "C:\\Windows\\SYSWOW64\\{{ item | win_basename }}"
   with_fileglob:
     - "C:\\Windows\\SYSWOW64\\Npcap\\*.dll"
+  when: not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Install tool
   win_get_url:
