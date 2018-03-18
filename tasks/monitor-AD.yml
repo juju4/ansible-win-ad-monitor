@@ -24,8 +24,8 @@
 - name: Ensure monitor account as BatchLogonRight
   win_command: "\"C:\\Program Files (x86)\\Windows Resource Kits\\Tools\\ntrights.exe\" -u {{ win_admonitor_monitorsec_user }} +r SeBatchLogonRight"
   register: ntrights
-  when_changed: "'... successful' in ntrights.stdout"
-  when_failed: "'***Error***' in ntrights.stdout"
+  changed_when: "'... successful' in ntrights.stdout"
+  failed_when: "'***Error***' in ntrights.stdout"
 
 # No checksums options
 - name: Monitor | download tools

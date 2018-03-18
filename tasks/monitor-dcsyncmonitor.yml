@@ -51,5 +51,9 @@
     dest: "C:\\Windows\\System32\\{{ win_admonitor_dcsync_whitelist }}"
   when: win_admonitor_dcsync_whitelist is defined and win_admonitor_dcsync_whitelist != ''
 
+# ignore error for existing service
 - name: DCSyncMonitor | Install
   win_command: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe -install"
+  register: moninstall
+  changed_when: "'DCSYNCMonitor is installed.' in moninstall.stdout"
+  failed_when: "'err ' in moninstall.stdout and 'CreateService failed w/err 0x00000431' not in moninstall.stdout"
