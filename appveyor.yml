@@ -88,6 +88,9 @@ after_test:
     %CYG_BASH% -lc 'ansible-playbook -i /cygdrive/c/projects/ansible-win-ad-monitor/test/appveyor/inventory /cygdrive/c/projects/ansible-win-ad-monitor/test/integration/default/default.yml $ANSIBLE_EXTRA_VARS'
 - ps: Get-ScheduledTask -TaskName "*monitor*"
 
+on_failure:
+- ps: Get-Content -Path "C:\ProgramData\Chocolatey\logs\chocolatey.log"
+
 notifications:
 - provider: Email
   to:
