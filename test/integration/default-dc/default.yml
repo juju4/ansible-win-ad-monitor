@@ -1,0 +1,7 @@
+---
+
+- hosts: all
+  become_method: runas
+  roles:
+#    - mrlesmithjr.windows-domain-controller    # reboot...
+    - juju4.win-ad-monitor
