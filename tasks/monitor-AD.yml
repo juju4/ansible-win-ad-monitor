@@ -19,6 +19,24 @@
   with_items:
     - inspec
     - rktools.2003
+  ignore_errors: true
+
+- block:
+    - name: check permissions
+      win_shell: "Get-ACL -Path \"C:\\Users\\winrm_test_user\\AppData\\Local\\Temp\\chocolatey\\rktools.2003\\rktools.msi\""
+      ignore_errors: true
+      changed_when: false
+    - name: Chocolatey rktools.2003 workaround
+      win_package:
+        path: "C:\\Users\\winrm_test_user\\AppData\\Local\\Temp\\chocolatey\\rktools.2003\\rktools.msi"
+        state: present
+        arguments: "/L* \"{{ win_temp_dir }}\\rktools2003.log\""
+      ignore_errors: true
+    - name: check msiexec log
+      win_shell: "Get-Content -Path \"{{ win_temp_dir }}\\rktools2003.log\""
+      ignore_errors: true
+      changed_when: false
+  when: win_admonitor_shim
 
 # FIXME! not idempotent
 - name: Ensure monitor account as BatchLogonRight

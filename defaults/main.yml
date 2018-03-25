@@ -14,6 +14,9 @@ win_schedtask_user: "{{ win_admonitor_monitorsec_user }}"
 win_admonitor_npcapoem: false
 win_admonitor_skipnpcap: true
 
+# rktools.2003 workaround
+win_admonitor_shim: true
+
 win_monitorsec_tools:
   - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/1.4/BloodHound-win32-x64.zip', c: '', d: 'BloodHound', creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe' }
 #  - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.3.0.zip', c: '', d: 'PingCastle', creates: 'PingCastle.exe' }
