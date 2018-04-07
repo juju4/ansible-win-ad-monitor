@@ -18,7 +18,7 @@ win_admonitor_skipnpcap: true
 win_admonitor_shim: true
 
 win_monitorsec_tools:
-  - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/1.4/BloodHound-win32-x64.zip', c: '', d: 'BloodHound', creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe' }
+  - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/1.5.1/BloodHound-win32-x64.zip', c: '', d: 'BloodHound', creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe' }
 #  - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.3.0.zip', c: '', d: 'PingCastle', creates: 'PingCastle.exe' }
   - { u: 'https://github.com/l0ss/Grouper/archive/master.zip', f: 'Grouper.zip', c: '', d: 'Grouper', creates: 'Grouper-master/grouper.psm1' }
   - { u: 'https://github.com/cyberark/ACLight/archive/master.zip', f: 'ACLight.zip', c: '', d: 'ACLight', creates: 'ACLight-master/ACLight.ps1' }

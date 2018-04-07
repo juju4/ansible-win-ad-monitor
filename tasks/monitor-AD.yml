@@ -9,9 +9,6 @@
       - Users
   ignore_errors: true
 
-# FIXME! user must have 'Log on as a batch job' right
-# Computer Configuration\Windows Settings\Security Settings\Local Policies\User Rights Assignment
-# if know SID beforehand, can be through secedit. else needs win2k3 support kit
 - name: Ensure requirements are present
   win_chocolatey:
     name: "{{ item }}"
@@ -80,6 +77,7 @@
     name: Daily-Security-Monitoring-Sharphound
     description: AD state check
     executable: "{{ win_temp_dir }}\\Bloodhound\\resources\\apps\\ingestors\\SharpHound.exe"
+    arguments: "-c All"
     time: 6am
     frequency: daily
     state: present
