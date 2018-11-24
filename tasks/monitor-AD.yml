@@ -38,65 +38,70 @@
     creates: "{{ win_temp_dir }}\\{{ item.d }}\\{{ item.creates }}"
   with_items: "{{ win_monitorsec_tools }}"
 
-- name: Monitor daily run | Inspec windows-baseline
-  win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec.log"
+- name: Inspec windows-baseline
+  win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec-ref.log"
   args:
-    creates: "{{ win_log_dir }}\\inspec.log"
+    creates: "{{ win_log_dir }}\\inspec-ref.log"
   ignore_errors: true
 
 - name: Monitor daily run | Inspec
   win_scheduled_task:
     name: Daily-Security-Monitoring-Inspec
     description: Win state check
-    executable: "c:\\opscode\\inspec\\bin\\inspec.bat"
-    arguments: "exec https://github.com/juju4/windows-baseline --format=json >{{ win_log_dir }}\\inspec.log"
-    time: 6am
-    frequency: daily
+    actions:
+      - path: "c:\\opscode\\inspec\\bin\\inspec.bat"
+        arguments: "exec https://github.com/juju4/windows-baseline --format=json >{{ win_log_dir }}\\inspec.log"
+    triggers:
+      - type: daily
+        start_boundary: '2018-11-01T06:00:00'
     state: present
     enabled: yes
-    user: "{{ win_schedtask_user }}"
+    username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
-#    runlevel: highest
+#    run_level: highest
 
 - name: Monitor daily run | PingCastle
   win_scheduled_task:
     name: Daily-Security-Monitoring-PingCastle
     description: AD state check
-    executable: "{{ win_temp_dir }}\\PingCastle\\PingCastle.exe"
-    arguments: "--healthcheck --server \"{{ win_domain }}\" --log"
-    time: 6am
-    frequency: daily
+    actions:
+      - path: "{{ win_temp_dir }}\\PingCastle\\PingCastle.exe"
+        arguments: "--healthcheck --server \"{{ win_domain }}\" --log"
+    triggers:
+      - type: daily
+        start_boundary: '2018-11-01T06:00:00'
     state: present
     enabled: yes
-    user: "{{ win_schedtask_user }}"
+    username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
-#    runlevel: highest
 
 - name: Monitor daily run | BloodHound-Sharphound
   win_scheduled_task:
     name: Daily-Security-Monitoring-Sharphound
     description: AD state check
-    executable: "{{ win_temp_dir }}\\Bloodhound\\resources\\apps\\ingestors\\SharpHound.exe"
-    arguments: "-c All"
-    time: 6am
-    frequency: daily
+    actions:
+      - path: "{{ win_temp_dir }}\\Bloodhound\\resources\\apps\\ingestors\\SharpHound.exe"
+        arguments: "-c All"
+    triggers:
+      - type: daily
+        start_boundary: '2018-11-01T06:00:00'
     state: present
     enabled: yes
-    user: "{{ win_schedtask_user }}"
+    username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
-#    runlevel: highest
 
 # https://github.com/l0ss/Grouper
 - name: Monitor daily run | Get-GPOReport
   win_scheduled_task:
     name: Daily-Security-Monitoring-Get-GPOReport
     description: AD state check
-    executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-    arguments: "-ExecutionPolicy Unrestricted -NonInteractive -Command 'Get-GPOReport -All -ReportType xml -Path {{ win_temp_dir }}\\gporeport.xml'"
-    time: 4am
-    frequency: daily
+    actions:
+      - path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+        arguments: "-ExecutionPolicy Unrestricted -NonInteractive -Command 'Get-GPOReport -All -ReportType xml -Path {{ win_temp_dir }}\\gporeport.xml'"
+    triggers:
+      - type: daily
+        start_boundary: '2018-11-01T04:00:00'
     state: present
     enabled: yes
-    user: "{{ win_schedtask_user }}"
+    username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
-#    runlevel: highest
