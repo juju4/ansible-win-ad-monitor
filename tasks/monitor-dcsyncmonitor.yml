@@ -8,7 +8,8 @@
     dest: "{{ win_temp_dir }}\\npcap-0.99-r1.exe"
 
 - name: DCSyncMonitor | Install npcap
-  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /S /npf_startup=yes /loopback_support=yes /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
+  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /S /npf_startup=yes /loopback_support=yes
+                /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
   args:
     creates: "C:\\Program Files\\Npcap\\NPFInstall.exe"
   when: win_admonitor_npcapoem
@@ -49,7 +50,7 @@
   win_template:
     src: "{{ win_admonitor_dcsync_whitelist }}.j2"
     dest: "C:\\Windows\\System32\\{{ win_admonitor_dcsync_whitelist }}"
-  when: win_admonitor_dcsync_whitelist is defined and win_admonitor_dcsync_whitelist != ''
+  when: win_admonitor_dcsync_whitelist is defined and win_admonitor_dcsync_whitelist
 
 # ignore error for existing service
 - name: DCSyncMonitor | Install
