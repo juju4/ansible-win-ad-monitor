@@ -3,4 +3,4 @@
 - hosts: all
   become_method: runas
   roles:
-    - juju4.win-ad-monitor
+    - juju4.win_ad_monitor

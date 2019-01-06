@@ -97,7 +97,8 @@
     description: AD state check
     actions:
       - path: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-        arguments: "-ExecutionPolicy Unrestricted -NonInteractive -Command 'Get-GPOReport -All -ReportType xml -Path {{ win_temp_dir }}\\gporeport.xml'"
+        arguments: "-ExecutionPolicy Unrestricted -NonInteractive
+                     -Command 'Get-GPOReport -All -ReportType xml -Path {{ win_temp_dir }}\\gporeport.xml'"
     triggers:
       - type: daily
         start_boundary: '2018-11-01T04:00:00'
