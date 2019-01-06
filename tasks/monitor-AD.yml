@@ -39,7 +39,8 @@
   with_items: "{{ win_monitorsec_tools }}"
 
 - name: Inspec windows-baseline
-  win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec-ref.log"
+  win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec
+                https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec-ref.log"
   args:
     creates: "{{ win_log_dir }}\\inspec-ref.log"
   ignore_errors: true
