@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: win_ad_monitor
   author: juju4
   description: setup Windows tools to monitor AD security state
   license: BSD

@@ -1,6 +1,6 @@
 version: 0.1.x.{build}
 skip_commits:
-  message: /^\(?doc\)?.*/
+  message: /^\(?doc|travis\)?.*/
 clone_depth: 10
 init:
 - SET
@@ -76,7 +76,7 @@ install:
 - cmd: "%CYG_BASH% -lc pwd"
 - cmd: "%CYG_BASH% -lc 'ansible -i /cygdrive/c/projects/ansible-win-ad-monitor/test/appveyor/inventory -m win_ping -vvv localhost'"
 - cmd: "%CYG_BASH% -lc 'mkdir -p /etc/ansible/roles'"
-- cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-ad-monitor /etc/ansible/roles/juju4.win-ad-monitor'"
+- cmd: "%CYG_BASH% -lc 'cp -R /cygdrive/c/projects/ansible-win-ad-monitor /etc/ansible/roles/juju4.win_ad_monitor'"
 
 build: off
 test_script:

@@ -8,5 +8,5 @@
     - "{{ win_temp_dir }}"
     - "{{ win_log_dir }}"
 
-- include: monitor-ad.yml
+- include: monitor-AD.yml
 - include: monitor-dcsyncmonitor.yml
