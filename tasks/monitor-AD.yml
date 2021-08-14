@@ -21,7 +21,7 @@
   win_user_right:
     name: SeBatchLogonRight
     users:
-    - "{{ win_admonitor_monitorsec_user }}"
+      - "{{ win_admonitor_monitorsec_user }}"
     action: add
 
 # No checksums options

@@ -7,8 +7,8 @@ win_domain: 'WORKGROUP'
 win_admonitor_monitorsec_user: '_monitorsec'
 win_admonitor_monitorsec_password: '_Password_CI_CD_to_be_revoked1_'
 win_schedtask_user: "{{ win_admonitor_monitorsec_user }}"
-#win_schedtask_user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
-#win_admonitor_dcsync_whitelist: dc_ip_list.conf
+# win_schedtask_user: "{{ win_domain }}\\{{ win_admonitor_monitorsec_user }}"
+# win_admonitor_dcsync_whitelist: dc_ip_list.conf
 
 # free npcap does not support silent install, have to get oem - https://nmap.org/npcap/oem/
 win_admonitor_npcapoem: false
@@ -22,22 +22,22 @@ win_monitorsec_tools:
       c: '',
       d: 'BloodHound',
       creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe'
-    }
-#  - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.3.0.zip',
-#      c: '',
-#      d: 'PingCastle',
-#      creates: 'PingCastle.exe'
-#    }
+  }
+  # - { u: 'https://www.pingcastle.com/PingCastleFiles/PingCastle_2.4.3.0.zip',
+  #     c: '',
+  #     d: 'PingCastle',
+  #     creates: 'PingCastle.exe'
+  #   }
   - { u: 'https://github.com/l0ss/Grouper/archive/master.zip',
       f: 'Grouper.zip',
       c: '',
       d: 'Grouper',
       creates: 'Grouper-master/grouper.psm1'
-    }
+  }
   - { u: 'https://github.com/cyberark/ACLight/archive/master.zip',
       f: 'ACLight.zip',
       c: '',
       d: 'ACLight',
       creates: 'ACLight-master/ACLight.ps1'
-    }
-#  - { u: '' }
+  }
+  # - { u: '' }

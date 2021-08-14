@@ -3,5 +3,5 @@
 - hosts: all
   become_method: runas
   roles:
-#    - mrlesmithjr.windows-domain-controller    # reboot...
+    # - mrlesmithjr.windows-domain-controller    # reboot...
     - juju4.win_ad_monitor
