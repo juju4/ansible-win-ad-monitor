@@ -1,5 +1,3 @@
-[![Build Status - Master](https://travis-ci.org/juju4/ansible-win-ad-monitor.svg?branch=master)](https://travis-ci.org/juju4/ansible-win-ad-monitor)
-[![Build Status - Devel](https://travis-ci.org/juju4/ansible-win-ad-monitor.svg?branch=devel)](https://travis-ci.org/juju4/ansible-win-ad-monitor/branches)(Syntax Only)
 
 [![Appveyor - Master](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-ad-monitor)
 ![Appveyor - Devel](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v/branch/devel?svg=true)
