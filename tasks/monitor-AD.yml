@@ -7,7 +7,7 @@
     state: present
     groups:
       - Users
-  ignore_errors: true
+  failed_when: false
 
 - name: Ensure requirements are present
   win_chocolatey:
@@ -15,7 +15,7 @@
     state: present
   with_items:
     - inspec
-  ignore_errors: true
+  failed_when: false
 
 - name: add account to Log on as a service
   win_user_right:
@@ -43,7 +43,7 @@
                 https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec-ref.log"
   args:
     creates: "{{ win_log_dir }}\\inspec-ref.log"
-  ignore_errors: true
+  failed_when: false
 
 - name: Monitor daily run | Inspec
   win_scheduled_task:
