@@ -17,12 +17,14 @@ win_admonitor_skipnpcap: true
 # rktools.2003 workaround
 win_admonitor_shim: true
 
+win_admonitor_sharphound: false
+win_admonitor_pingcastle: false
 win_monitorsec_tools:
-  - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-win32-x64.zip',
-      c: '',
-      d: 'BloodHound',
-      creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe'
-  }
+  # - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-win32-x64.zip',
+  #     c: '',
+  #     d: 'BloodHound',
+  #     creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe'
+  # }
   # - { u: 'https://github.com/vletoux/pingcastle/releases/download/2.10.0.0/PingCastle_2.10.0.0.zip',
   #     c: '',
   #     d: 'PingCastle',

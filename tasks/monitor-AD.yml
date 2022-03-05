@@ -75,6 +75,7 @@
     enabled: yes
     username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
+  when: win_admonitor_pingcastle|bool
 
 - name: Monitor daily run | BloodHound-Sharphound
   win_scheduled_task:
@@ -90,6 +91,7 @@
     enabled: yes
     username: "{{ win_schedtask_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
+  when: win_admonitor_sharphound|bool
 
 # https://github.com/l0ss/Grouper
 - name: Monitor daily run | Get-GPOReport
