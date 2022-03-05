@@ -1,6 +1,5 @@
-
-[![Appveyor - Master](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-ad-monitor)
-![Appveyor - Devel](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v/branch/devel?svg=true)
+[![Appveyor - master](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v/branch/master?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-ad-monitor/branch/master)
+[![Appveyor - devel](https://ci.appveyor.com/api/projects/status/xit0dk3srx7w377v/branch/devel?svg=true)](https://ci.appveyor.com/project/juju4/ansible-win-ad-monitor/branch/devel)
 
 # Windows AD monitor ansible role
 
@@ -17,7 +16,9 @@ Ansible role to setup multiple tools to monitor the security state of an Active 
 It was tested on the following versions:
  * 2.3
  * 2.4
- * 2.5rc3
+ * 2.5
+ * 4.10.0
+ * 5.3.0
 
 ### Operating systems
 
@@ -31,7 +32,7 @@ For example
 ```
 - host: all
   roles:
-    - juju4.win-ad-monitor
+    - juju4.win_ad_monitor
 ```
 
 Run
@@ -49,7 +50,7 @@ See defaults/main.yml for full scope
 This role has a travis basic test (for github, syntax check only), Appveyor test and a Vagrantfile (test/vagrant).
 
 ```
-$ cd /path/to/roles/juju4.win-ad-monitor/test/vagrant
+$ cd /path/to/roles/juju4.win_ad_monitor/test/vagrant
 $ vagrant up
 $ vagrant provision
 $ vagrant destroy
