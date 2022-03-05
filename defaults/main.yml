@@ -18,18 +18,18 @@ win_admonitor_skipnpcap: true
 win_admonitor_shim: true
 
 win_admonitor_sharphound: false
-win_admonitor_pingcastle: false
+win_admonitor_pingcastle: true
 win_monitorsec_tools:
   # - { u: 'https://github.com/BloodHoundAD/BloodHound/releases/download/4.0.3/BloodHound-win32-x64.zip',
   #     c: '',
   #     d: 'BloodHound',
   #     creates: 'BloodHound-win32-x64/resources/app/Ingestors/SharpHound.exe'
   # }
-  # - { u: 'https://github.com/vletoux/pingcastle/releases/download/2.10.0.0/PingCastle_2.10.0.0.zip',
-  #     c: '',
-  #     d: 'PingCastle',
-  #     creates: 'PingCastle.exe'
-  #   }
+  - { u: 'https://github.com/vletoux/pingcastle/releases/download/2.10.1.0/PingCastle_2.10.1.0.zip',
+      c: '',
+      d: 'PingCastle',
+      creates: 'PingCastle.exe'
+  }
   - { u: 'https://github.com/l0ss/Grouper/archive/master.zip',
       f: 'Grouper.zip',
       c: '',
@@ -43,3 +43,5 @@ win_monitorsec_tools:
       creates: 'ACLight-master/ACLight.ps1'
   }
   # - { u: '' }
+
+win_admonitor_nolog: true
