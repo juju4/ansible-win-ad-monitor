@@ -20,7 +20,7 @@
   when: not win_admonitor_npcapoem and not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Copy npcap dll to Windows system32
-  file:
+  ansible.builtin.file:
     src: "{{ item }}"
     dest: "C:\\Windows\\System32\\{{ item | win_basename }}"
   with_fileglob:
@@ -28,7 +28,7 @@
   when: not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Copy npcap dll to Windows SYSWOW64
-  file:
+  ansible.builtin.file:
     src: "{{ item }}"
     dest: "C:\\Windows\\SYSWOW64\\{{ item | win_basename }}"
   with_fileglob:
