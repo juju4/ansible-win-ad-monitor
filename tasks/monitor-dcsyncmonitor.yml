@@ -15,7 +15,7 @@
   when: win_admonitor_npcapoem
 
 - name: Please install manually npcap - https://nmap.org/npcap/oem/
-  pause:
+  ansible.builtin.pause:
     prompt: "Please install manually npcap, free version does not support silent mode - https://nmap.org/npcap/oem/"
   when: not win_admonitor_npcapoem and not win_admonitor_skipnpcap
 
