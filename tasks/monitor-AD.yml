@@ -1,7 +1,7 @@
 ---
 
 - name: Ensure user _monitorsec is present
-  win_user:
+  ansible.windows.win_user:
     name: "{{ win_admonitor_monitorsec_user }}"
     password: "{{ win_admonitor_monitorsec_password }}"
     state: present
@@ -11,15 +11,15 @@
   no_log: "{{ win_admonitor_nolog }}"
 
 - name: Ensure requirements are present
-  win_chocolatey:
+  chocolatey.chocolatey.win_chocolatey:
     name: "{{ item }}"
     state: present
   with_items:
     - inspec
   failed_when: false
 
-- name: add account to Log on as a service
-  win_user_right:
+- name: Add account to Log on as a service
+  ansible.windows.win_user_right:
     name: SeBatchLogonRight
     users:
       - "{{ win_admonitor_monitorsec_user }}"
@@ -27,27 +27,27 @@
 
 # No checksums options
 - name: Monitor | download tools
-  win_get_url:
+  ansible.windows.win_get_url:
     url: "{{ item.u }}"
     dest: "{{ win_temp_dir }}\\{{ item.f | default(item.u | basename) }}"
   with_items: "{{ win_monitorsec_tools }}"
 
 - name: Monitor | unarchive tools
-  win_unzip:
+  community.windows.win_unzip:
     src: "{{ win_temp_dir }}\\{{ item.f | default(item.u | basename) }}"
     dest: "{{ win_temp_dir }}\\{{ item.d }}"
     creates: "{{ win_temp_dir }}\\{{ item.d }}\\{{ item.creates }}"
   with_items: "{{ win_monitorsec_tools }}"
 
 - name: Inspec windows-baseline
-  win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec
+  ansible.windows.win_command: "c:\\opscode\\inspec\\bin\\inspec.bat exec
                 https://github.com/juju4/windows-baseline >{{ win_log_dir }}\\inspec-ref.log"
   args:
     creates: "{{ win_log_dir }}\\inspec-ref.log"
   failed_when: false
 
 - name: Monitor daily run | Inspec
-  win_scheduled_task:
+  community.windows.win_scheduled_task:
     name: Daily-Security-Monitoring-Inspec
     description: Win state check
     actions:
@@ -64,7 +64,7 @@
   no_log: "{{ win_admonitor_nolog }}"
 
 - name: Monitor daily run | PingCastle
-  win_scheduled_task:
+  community.windows.win_scheduled_task:
     name: Daily-Security-Monitoring-PingCastle
     description: AD state check
     actions:
@@ -81,7 +81,7 @@
   when: win_admonitor_pingcastle|bool
 
 - name: Monitor daily run | BloodHound-Sharphound
-  win_scheduled_task:
+  community.windows.win_scheduled_task:
     name: Daily-Security-Monitoring-Sharphound
     description: AD state check
     actions:
@@ -99,7 +99,7 @@
 
 # https://github.com/l0ss/Grouper
 - name: Monitor daily run | Get-GPOReport
-  win_scheduled_task:
+  community.windows.win_scheduled_task:
     name: Daily-Security-Monitoring-Get-GPOReport
     description: AD state check
     actions:

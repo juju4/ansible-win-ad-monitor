@@ -1,12 +1,14 @@
 ---
 
 - name: Ensure ansible directories exist
-  win_file:
+  ansible.windows.win_file:
     path: "{{ item }}"
     state: directory
   with_items:
     - "{{ win_temp_dir }}"
     - "{{ win_log_dir }}"
 
-- include: monitor-AD.yml
-- include: monitor-dcsyncmonitor.yml
+- name: Import monitor-AD
+  ansible.builtin.import_tasks: monitor-AD.yml
+- name: Import monitor-dcsyncmonitor
+  ansible.builtin.import_tasks: monitor-dcsyncmonitor.yml

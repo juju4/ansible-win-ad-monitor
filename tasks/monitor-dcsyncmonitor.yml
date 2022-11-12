@@ -3,12 +3,12 @@
 # https://nmap.org/npcap/
 
 - name: DCSyncMonitor | Download npcap
-  win_get_url:
+  ansible.windows.win_get_url:
     url: https://nmap.org/npcap/dist/npcap-0.99-r1.exe
     dest: "{{ win_temp_dir }}\\npcap-0.99-r1.exe"
 
 - name: DCSyncMonitor | Install npcap
-  win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /S /npf_startup=yes /loopback_support=yes
+  ansible.windows.win_command: "\"{{ win_temp_dir }}\\npcap-0.99-r1.exe\" /S /npf_startup=yes /loopback_support=yes
                 /dlt_null=no /admin_only=yes /dot11_support=yes /vlan_support=yes /winpcap_mode=yes"
   args:
     creates: "C:\\Program Files\\Npcap\\NPFInstall.exe"
@@ -36,25 +36,25 @@
   when: not win_admonitor_skipnpcap
 
 - name: DCSyncMonitor | Install tool
-  win_get_url:
+  ansible.windows.win_get_url:
     url: https://github.com/shellster/DCSYNCMonitor/raw/master/x64/Release/DCSYNCMONITORSERVICE.exe
     dest: "{{ win_temp_dir }}\\DCSYNCMONITORSERVICE.exe"
 
 - name: DCSyncMonitor | Copy tool to Windows system32
-  win_copy:
+  ansible.windows.win_copy:
     src: "{{ win_temp_dir }}\\DCSYNCMONITORSERVICE.exe"
     dest: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe"
     remote_src: yes
 
 - name: DCSyncMonitor | upload whitelist files
-  win_template:
+  ansible.windows.win_template:
     src: "{{ win_admonitor_dcsync_whitelist }}.j2"
     dest: "C:\\Windows\\System32\\{{ win_admonitor_dcsync_whitelist }}"
   when: win_admonitor_dcsync_whitelist is defined and win_admonitor_dcsync_whitelist
 
 # ignore error for existing service
 - name: DCSyncMonitor | Install
-  win_command: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe -install"
+  ansible.windows.win_command: "C:\\Windows\\System32\\DCSYNCMONITORSERVICE.exe -install"
   register: moninstall
   changed_when: "'DCSYNCMonitor is installed.' in moninstall.stdout"
   failed_when: "'err ' in moninstall.stdout and 'CreateService failed w/err 0x00000431' not in moninstall.stdout"
