@@ -2,6 +2,6 @@
 
 - name: Test play
   hosts: all
-  become_method: runas
+  become_method: ansible.builtin.runas
   roles:
     - juju4.win_ad_monitor

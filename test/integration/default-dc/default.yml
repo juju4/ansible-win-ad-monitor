@@ -2,7 +2,7 @@
 
 - name: Test play
   hosts: all
-  become_method: runas
+  become_method: ansible.builtin.runas
   roles:
     # - mrlesmithjr.windows-domain-controller    # reboot...
     - juju4.win_ad_monitor
